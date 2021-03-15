@@ -1,9 +1,8 @@
-var slider1 = new Slider();
-//var slider2 = new Slider();
+var sliderCreator = new Slider();
 
-slider1.start('itk-slider1');
-//slider2.start('itk-slider2');
-
+function addSlider(){
+    sliderCreator('itk-slider1');
+}
 
 
 

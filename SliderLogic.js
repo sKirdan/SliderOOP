@@ -1,22 +1,18 @@
-function SliderLogic(){
-    this._imagesUrls = [],
-    this.currentImageIndex = 0,
-    this._dataService = new SliderDataService();
+function SliderLogic(view){
+    this._imagesUrls = []
+    this.currentImageIndex = 0
+    this._imagesUrls = new SliderDataService().getUrls()
 
-    
-    this.getCurrentImage = function() {
-        return this._imagesUrls[this.currentImageIndex];
+    this.onClick = function (index) {
+        view.slideImage.setAttribute('src', this._imagesUrls[this.currentImageIndex]);
+        view.showPrevBtn.disabled = index === 0;
+        view.showNextBtn.disabled = index === this._imagesUrls.length - 1;
     };
 
-  /*  this.doYouHavePrewImage = function(){
+        return () => {
+            view.showPrevBtn.addEventListener('click', () => this.onClick(--this.currentImageIndex));
+            view.showNextBtn.addEventListener('click', () => this.onClick(++this.currentImageIndex));
 
-        return 
-    }*/
-    this.showNextBtnDisablIndex = function(){
-       
-        return this._imagesUrls.length - 1;
-    }
-
-    this._imagesUrls = this._dataService.getUrls();
-    
-};
+            this.onClick(this.currentImageIndex);
+        }
+    };

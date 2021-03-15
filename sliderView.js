@@ -1,49 +1,31 @@
 function Slider(){
-    this.showPrevBtn = null,
-    this.showNextBtn = null,
-    this.slideImage = null,
-    this._local = new SliderLogic();
-
-    this.start = function (elId) {
+    return (elId) => {
+        var sliderView = {
+            showPrevBtn: null,
+            showNextBtn: null,
+            slideImage: null,
+            controller: null
+        }
 
         var elSelector = '#' + elId;
         var el = document.querySelector(elSelector);
- 
-        el.innerHTML =`
+
+        var htmlDivElement = document.createElement("div");
+        htmlDivElement.innerHTML =`
         <div class='itk-slider'>
             <button class='show-prev-btn'> PREV </button>
             <img class='slide-img' src="" />
             <button class='show-next-btn'> NEXT </button>
         </div>`
 
-        this.showPrevBtn = el.querySelector('.show-prev-btn'),
-        this.showNextBtn = el.querySelector('.show-next-btn'),
-        this.slideImage = el.querySelector('.slide-img'),
+        el.appendChild(htmlDivElement);
 
-        this.showPrevBtn.addEventListener('click', () => this.onShowPrevBtnClick());
-        this.showNextBtn.addEventListener('click', () => this.onShowNextBtnClick());
+        sliderView.showPrevBtn = htmlDivElement.querySelector('.show-prev-btn'),
+        sliderView.showNextBtn = htmlDivElement.querySelector('.show-next-btn'),
+        sliderView.slideImage = htmlDivElement.querySelector('.slide-img')
 
-        
-        this.onClick( this._local.getCurrentImage);
+        sliderView.controller = new SliderLogic(sliderView)();
     };
-    this.onClick = function (index) {
-
-        this.slideImage.setAttribute('src', this._local.getCurrentImage());
-        this.showPrevBtn.disabled = index === 0;
-        this.showNextBtn.disabled = index === this._local.showNextBtnDisablIndex();
-
-    };
-
-
-    this.onShowPrevBtnClick = function () {
-
-        this.onClick(--this._local.currentImageIndex);
-    };
-    this.onShowNextBtnClick =  function () {
-
-        this.onClick(++this._local.currentImageIndex);
-    };
-
 };
 
 
